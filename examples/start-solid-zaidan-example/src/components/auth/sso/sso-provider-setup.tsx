@@ -7,6 +7,7 @@ import type {
 import { useAuth, useAuthPlugin } from "@better-auth-ui/solid"
 import { useRegisterSsoProvider } from "@better-auth-ui/solid/plugins/sso"
 import type { BetterFetchError } from "better-auth/client"
+import { FileCode2, KeyRound } from "lucide-solid"
 import { createSignal, Show } from "solid-js"
 import {
   Card,
@@ -265,9 +266,17 @@ export function SsoProviderSetup(props: SsoProviderSetupProps) {
                   >
                     <TabsList aria-label={localization.providerSetup}>
                       <TabsTrigger value="oidc">
+                        <KeyRound
+                          aria-hidden="true"
+                          class="text-muted-foreground"
+                        />
                         {localization.oidc}
                       </TabsTrigger>
                       <TabsTrigger value="saml">
+                        <FileCode2
+                          aria-hidden="true"
+                          class="text-muted-foreground"
+                        />
                         {localization.saml}
                       </TabsTrigger>
                     </TabsList>

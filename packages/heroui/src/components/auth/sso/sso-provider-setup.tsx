@@ -8,6 +8,7 @@ import type {
 } from "@better-auth-ui/core/plugins/sso"
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react"
 import { useRegisterSsoProvider } from "@better-auth-ui/react/plugins/sso"
+import { FileCode, Key } from "@gravity-ui/icons"
 import {
   Alert,
   Card,
@@ -247,10 +248,12 @@ export function SsoProviderSetup({
                   <Tabs.ListContainer>
                     <Tabs.List aria-label={localization.providerSetup}>
                       <Tabs.Tab id="oidc">
+                        <Key aria-hidden="true" className="text-muted" />
                         {localization.oidc}
                         <Tabs.Indicator />
                       </Tabs.Tab>
                       <Tabs.Tab id="saml">
+                        <FileCode aria-hidden="true" className="text-muted" />
                         {localization.saml}
                         <Tabs.Indicator />
                       </Tabs.Tab>

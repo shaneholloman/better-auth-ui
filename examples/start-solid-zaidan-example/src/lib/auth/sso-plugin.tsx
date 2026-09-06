@@ -8,6 +8,7 @@ import {
   type SsoLocalization,
   type SsoPluginOptions
 } from "@better-auth-ui/core/plugins/sso"
+import { ShieldCheck } from "lucide-solid"
 
 import { EmailFirstSignIn } from "@/components/auth/sso/email-first-sign-in"
 import { OrganizationSsoProviders } from "@/components/auth/sso/organization-sso-providers"
@@ -17,7 +18,15 @@ export const ssoPlugin = createAuthPlugin(
   (options: SsoPluginOptions = {}) => {
     const plugin = coreSsoPlugin(options)
     const localizedOrganizationTab = (localization: SsoLocalization) => {
-      const ProviderLabel = () => localization.providerList
+      const ProviderLabel = () => (
+        <span class="inline-flex items-center gap-1">
+          <ShieldCheck
+            aria-hidden="true"
+            class="size-4 text-muted-foreground"
+          />
+          {localization.providerList}
+        </span>
+      )
       return plugin.organization
         ? {
             organizationTabs: [

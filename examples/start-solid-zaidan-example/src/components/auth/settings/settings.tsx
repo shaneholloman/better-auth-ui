@@ -1,5 +1,6 @@
 import type { SettingsView } from "@better-auth-ui/core"
 import { useAuth, useSession } from "@better-auth-ui/solid"
+import { Shield, UserRound } from "lucide-solid"
 import type { Component } from "solid-js"
 import { createMemo, For, Show } from "solid-js"
 import { AccountSettings } from "@/components/auth/settings/account/account-settings"
@@ -124,9 +125,11 @@ export function Settings(props: SettingsProps) {
             <div class={cn(props.hideNav && "hidden")}>
               <TabsList aria-label={auth.localization.settings.settings}>
                 <TabsTrigger value="account">
+                  <UserRound aria-hidden="true" class="text-muted-foreground" />
                   {auth.localization.settings.account}
                 </TabsTrigger>
                 <TabsTrigger value="security">
+                  <Shield aria-hidden="true" class="text-muted-foreground" />
                   {auth.localization.settings.security}
                 </TabsTrigger>
                 <For each={pluginTabs()}>

@@ -8,6 +8,8 @@ import {
   type SsoLocalization,
   type SsoPluginOptions
 } from "@better-auth-ui/core/plugins/sso"
+import { ShieldCheck } from "lucide-react"
+import { createElement } from "react"
 
 import { EmailFirstSignIn } from "@/components/auth/sso/email-first-sign-in"
 import { OrganizationSsoProviders } from "@/components/auth/sso/organization-sso-providers"
@@ -23,7 +25,15 @@ export const ssoPlugin = createAuthPlugin(
               {
                 id: "sso",
                 path: plugin.path,
-                label: localization.providerList,
+                label: createElement(
+                  "span",
+                  { className: "inline-flex items-center gap-1" },
+                  createElement(ShieldCheck, {
+                    "aria-hidden": true,
+                    className: "text-muted-foreground"
+                  }),
+                  localization.providerList
+                ),
                 component: OrganizationSsoProviders
               }
             ]

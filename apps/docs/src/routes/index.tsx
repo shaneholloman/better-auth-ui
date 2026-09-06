@@ -1,4 +1,4 @@
-import { Discord, GitHub } from "@better-auth-ui/react"
+import { Discord, GitHub, useCopyToClipboard } from "@better-auth-ui/react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { HomeLayout } from "fumadocs-ui/layouts/home"
 import {
@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Zap
 } from "lucide-react"
-import { type ReactNode, useState } from "react"
+import type { ReactNode } from "react"
 import { HeroUI } from "@/components/icons/heroui"
 import { React as ReactIcon } from "@/components/icons/react"
 import { Shadcn } from "@/components/icons/shadcn"
@@ -24,31 +24,21 @@ export const Route = createFileRoute("/")({
 })
 
 function Home() {
-  const [copiedShadcn, setCopiedShadcn] = useState(false)
-  const [copiedHeroui, setCopiedHeroui] = useState(false)
-  const [copiedSolid, setCopiedSolid] = useState(false)
+  const { copied: copiedShadcn, copy: copyShadcn } = useCopyToClipboard()
+  const { copied: copiedHeroui, copy: copyHeroui } = useCopyToClipboard()
+  const { copied: copiedSolid, copy: copySolid } = useCopyToClipboard()
 
-  const copyShadcnCommand = () => {
-    navigator.clipboard.writeText(shadcnInstallCommand)
-    setCopiedShadcn(true)
-    setTimeout(() => setCopiedShadcn(false), 2000)
-  }
+  const copyShadcnCommand = () => copyShadcn(shadcnInstallCommand)
 
-  const copyHeroUiCommand = () => {
-    navigator.clipboard.writeText(
+  const copyHeroUiCommand = () =>
+    copyHeroui(
       "bun add @better-auth-ui/heroui@latest @better-auth-ui/react@latest @better-auth-ui/core@latest"
     )
-    setCopiedHeroui(true)
-    setTimeout(() => setCopiedHeroui(false), 2000)
-  }
 
-  const copySolidCommand = () => {
-    navigator.clipboard.writeText(
+  const copySolidCommand = () =>
+    copySolid(
       "bun add @better-auth-ui/solid@latest @better-auth-ui/core@latest @tanstack/solid-query"
     )
-    setCopiedSolid(true)
-    setTimeout(() => setCopiedSolid(false), 2000)
-  }
 
   return (
     <HomeLayout {...baseOptions()}>

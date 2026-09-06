@@ -9,6 +9,7 @@ import type {
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react"
 import { useRegisterSsoProvider } from "@better-auth-ui/react/plugins/sso"
 import type { BetterFetchError } from "better-auth/client"
+import { FileCode2, KeyRound } from "lucide-react"
 import { useState } from "react"
 import {
   Card,
@@ -267,9 +268,17 @@ export function SsoProviderSetup({
                   >
                     <TabsList aria-label={localization.providerSetup}>
                       <TabsTrigger value="oidc">
+                        <KeyRound
+                          aria-hidden="true"
+                          className="text-muted-foreground"
+                        />
                         {localization.oidc}
                       </TabsTrigger>
                       <TabsTrigger value="saml">
+                        <FileCode2
+                          aria-hidden="true"
+                          className="text-muted-foreground"
+                        />
                         {localization.saml}
                       </TabsTrigger>
                     </TabsList>

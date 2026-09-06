@@ -12,7 +12,13 @@ import {
   useEnableTwoFactor,
   useVerifyTotp
 } from "@better-auth-ui/react/plugins/two-factor"
-import { Check, Copy, ShieldCheck } from "@gravity-ui/icons"
+import {
+  Check,
+  Copy,
+  Envelope,
+  ShieldCheck,
+  Smartphone
+} from "@gravity-ui/icons"
 import {
   AlertDialog,
   Button,
@@ -224,12 +230,20 @@ export function EnableTwoFactorDialog({
                           >
                             {enrollmentMethods.includes("totp") && (
                               <Tabs.Tab id="totp">
+                                <Smartphone
+                                  aria-hidden="true"
+                                  className="text-muted"
+                                />
                                 {twoFactorLocalization.authenticatorApp}
                                 <Tabs.Indicator />
                               </Tabs.Tab>
                             )}
                             {enrollmentMethods.includes("otp") && (
                               <Tabs.Tab id="otp">
+                                <Envelope
+                                  aria-hidden="true"
+                                  className="text-muted"
+                                />
                                 {twoFactorLocalization.deliveredCode}
                                 <Tabs.Indicator />
                               </Tabs.Tab>

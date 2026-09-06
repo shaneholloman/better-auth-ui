@@ -439,7 +439,7 @@ const solidRegistryBaseManifest = {
         betterAuthSolidRegistryDependency("sign-in")
       ],
       files: [
-        libFile("src/lib/auth/sso-plugin.ts"),
+        libFile("src/lib/auth/sso-plugin.tsx"),
         ...reauthenticationFiles,
         libFile("src/lib/auth/use-sign-in-continuation.ts"),
         libFile("src/lib/auth/two-factor-methods.ts"),

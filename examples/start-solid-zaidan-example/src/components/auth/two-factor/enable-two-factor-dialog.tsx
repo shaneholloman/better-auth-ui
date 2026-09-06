@@ -11,7 +11,7 @@ import {
   useAuthPlugin
 } from "@better-auth-ui/solid"
 import { createMutation } from "@tanstack/solid-query"
-import { Check, Copy, ShieldCheck } from "lucide-solid"
+import { Check, Copy, Mail, ShieldCheck, Smartphone } from "lucide-solid"
 import { createSignal, Show } from "solid-js"
 import { toast } from "solid-sonner"
 import { OtpField } from "@/components/auth/otp-field"
@@ -190,11 +190,19 @@ export function EnableTwoFactorDialog(props: {
                   >
                     <Show when={enrollmentMethods.includes("totp")}>
                       <TabsTrigger value="totp">
+                        <Smartphone
+                          aria-hidden="true"
+                          class="text-muted-foreground"
+                        />
                         {twoFactorLocalization.authenticatorApp}
                       </TabsTrigger>
                     </Show>
                     <Show when={enrollmentMethods.includes("otp")}>
                       <TabsTrigger value="otp">
+                        <Mail
+                          aria-hidden="true"
+                          class="text-muted-foreground"
+                        />
                         {twoFactorLocalization.deliveredCode}
                       </TabsTrigger>
                     </Show>

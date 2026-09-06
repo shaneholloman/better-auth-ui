@@ -12,7 +12,11 @@ import {
   adminPlugin,
   isAdminTarget
 } from "@better-auth-ui/core/plugins/admin"
-import { useAuth, useSession } from "@better-auth-ui/solid"
+import {
+  createCopyToClipboard,
+  useAuth,
+  useSession
+} from "@better-auth-ui/solid"
 import {
   useAdminPermission,
   useAdminUser,
@@ -33,13 +37,16 @@ import { createDebouncedValue } from "@tanstack/solid-pacer"
 import type { SortingState } from "@tanstack/solid-table"
 import {
   Ban,
+  Check,
   Copy,
   Ellipsis,
   KeyRound,
   LogIn,
+  Monitor,
   Search,
   Trash2,
-  UserPlus
+  UserPlus,
+  UserRound
 } from "lucide-solid"
 import { createEffect, createMemo, createSignal, For, Show } from "solid-js"
 import { Dynamic } from "solid-js/web"
@@ -908,6 +915,16 @@ function UserDialog(props: {
     () => ({ session: ["revoke"] }),
     enabled
   )
+  const {
+    copied: userIdCopied,
+    copy: copyUserId,
+    reset: resetUserIdCopy
+  } = createCopyToClipboard()
+
+  createEffect(() => {
+    if (props.open && props.userId()) resetUserIdCopy()
+  })
+
   const [banReason, setBanReason] = createSignal("")
   const [banDuration, setBanDuration] = createSignal("")
   const banDurationSeconds = createMemo(() =>
@@ -1176,6 +1193,10 @@ function UserDialog(props: {
                 >
                   <TabsList class="mx-6 h-11 shrink-0" variant="line">
                     <TabsTrigger value="overview">
+                      <UserRound
+                        aria-hidden="true"
+                        class="text-muted-foreground"
+                      />
                       {config().localization.overview}
                     </TabsTrigger>
                     <TabsTrigger
@@ -1185,6 +1206,10 @@ function UserDialog(props: {
                       }
                       value="sessions"
                     >
+                      <Monitor
+                        aria-hidden="true"
+                        class="text-muted-foreground"
+                      />
                       {config().localization.sessions}
                     </TabsTrigger>
                     <For each={contributedTabs()}>
@@ -1392,18 +1417,19 @@ function UserDialog(props: {
                                   </code>
                                   <Button
                                     aria-label={
-                                      config().localization.copyUserId
+                                      userIdCopied()
+                                        ? auth.localization.settings
+                                            .copiedToClipboard
+                                        : config().localization.copyUserId
                                     }
                                     size="icon-xs"
                                     type="button"
                                     variant="ghost"
                                     onClick={() =>
-                                      navigator.clipboard.writeText(
-                                        selectedUser().id
-                                      )
+                                      copyUserId(selectedUser().id)
                                     }
                                   >
-                                    <Copy />
+                                    {userIdCopied() ? <Check /> : <Copy />}
                                   </Button>
                                 </dd>
                               </div>

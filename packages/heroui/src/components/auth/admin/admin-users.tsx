@@ -13,7 +13,12 @@ import {
   type AdminUser,
   isAdminTarget
 } from "@better-auth-ui/core/plugins/admin"
-import { useAuth, useAuthPlugin, useSession } from "@better-auth-ui/react"
+import {
+  useAuth,
+  useAuthPlugin,
+  useCopyToClipboard,
+  useSession
+} from "@better-auth-ui/react"
 import {
   useAdminPermission,
   useAdminUser,
@@ -33,9 +38,12 @@ import {
 import {
   ArrowRightToSquare,
   Ban,
+  Check,
   Copy,
+  Display,
   Ellipsis,
   Key,
+  Person,
   PersonPlus,
   TrashBin
 } from "@gravity-ui/icons"
@@ -912,6 +920,16 @@ function UserDrawer({
     { session: ["revoke"] },
     { enabled: Boolean(userId) }
   )
+  const {
+    copied: userIdCopied,
+    copy: copyUserId,
+    reset: resetUserIdCopy
+  } = useCopyToClipboard()
+
+  useEffect(() => {
+    if (isOpen && userId) resetUserIdCopy()
+  }, [isOpen, userId, resetUserIdCopy])
+
   const [banReason, setBanReason] = useState("")
   const [banDuration, setBanDuration] = useState("")
   const banDurationSeconds = getBanDurationSeconds(banDuration)
@@ -1166,6 +1184,7 @@ function UserDrawer({
                   <Tabs.ListContainer className="shrink-0 border-b px-6">
                     <Tabs.List aria-label={config.localization.userDetails}>
                       <Tabs.Tab id="overview">
+                        <Person aria-hidden="true" className="text-muted" />
                         {config.localization.overview}
                         <Tabs.Indicator />
                       </Tabs.Tab>
@@ -1176,6 +1195,7 @@ function UserDrawer({
                           !sessionsPermission.data?.success
                         }
                       >
+                        <Display aria-hidden="true" className="text-muted" />
                         {config.localization.sessions}
                         <Tabs.Indicator />
                       </Tabs.Tab>
@@ -1338,16 +1358,19 @@ function UserDrawer({
                                     {detail.id}
                                   </code>
                                   <Button
-                                    aria-label={config.localization.copyUserId}
+                                    aria-label={
+                                      userIdCopied
+                                        ? localization.settings
+                                            .copiedToClipboard
+                                        : config.localization.copyUserId
+                                    }
                                     isIconOnly
                                     size="sm"
                                     type="button"
                                     variant="ghost"
-                                    onPress={() =>
-                                      navigator.clipboard.writeText(detail.id)
-                                    }
+                                    onPress={() => copyUserId(detail.id)}
                                   >
-                                    <Copy />
+                                    {userIdCopied ? <Check /> : <Copy />}
                                   </Button>
                                 </dd>
                               </div>

@@ -14,7 +14,7 @@ import {
   useEnableTwoFactor,
   useVerifyTotp
 } from "@better-auth-ui/react/plugins/two-factor"
-import { Check, Copy, ShieldCheck } from "lucide-react"
+import { Check, Copy, Mail, ShieldCheck, Smartphone } from "lucide-react"
 import { useMemo, useState } from "react"
 import { toast } from "sonner"
 import { buttonVariants } from "@/components/ui/button"
@@ -223,11 +223,19 @@ export function EnableTwoFactorDialog({
                     >
                       {enrollmentMethods.includes("totp") && (
                         <TabsTrigger value="totp">
+                          <Smartphone
+                            aria-hidden="true"
+                            className="text-muted-foreground"
+                          />
                           {twoFactorLocalization.authenticatorApp}
                         </TabsTrigger>
                       )}
                       {enrollmentMethods.includes("otp") && (
                         <TabsTrigger value="otp">
+                          <Mail
+                            aria-hidden="true"
+                            className="text-muted-foreground"
+                          />
                           {twoFactorLocalization.deliveredCode}
                         </TabsTrigger>
                       )}
